@@ -132,6 +132,46 @@ patches {
   (sink name: (identifier)))
 
 ================================================================================
+kernel declaration
+================================================================================
+
+kernel fm3(index = 300.0) {
+    in fm_in
+
+    audio {
+        sine: op1 { freq: 110.0 }
+    }
+
+    fm_in >> op1[0]
+
+    { op1 }
+}
+
+{ out }
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (kernel
+    name: (identifier)
+    default_params: (default_params
+      name: (identifier)
+      value: (value (float)))
+    body: (patch_body
+      (virtual_ports port: (identifier))
+      (scope
+        namespace: (identifier)
+        (node_declaration
+          node_type: (identifier)
+          alias: (identifier)
+          params: (params (param key: (identifier) value: (value (float))))))
+      (connection
+        (endpoint node: (identifier))
+        (endpoint node: (identifier) port: (port (uint))))
+      (sink name: (identifier))))
+  (sink name: (identifier)))
+
+================================================================================
 comments are ignored
 ================================================================================
 

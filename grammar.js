@@ -28,11 +28,13 @@ module.exports = grammar({
   ],
 
   rules: {
-    // top-level: source? patches* scopes* connections* sink
-    // mirrors legato_parser_inner: every section is extra_padded, source/connections optional
+    // top-level: source? macros* scopes* connections* sink
+    // mirrors legato_parser_inner: every section is extra_padded, source/connections optional.
+    // `patch` and `kernel` are the same production in the legato parser (both parsed by
+    // patch_parser, distinguished only by MacroKind), so they interleave in one repeat.
     source_file: $ => seq(
       optional($.source),
-      repeat($.patch),
+      repeat(choice($.patch, $.kernel)),
       repeat($.scope),
       repeat($.connection),
       $.sink,
@@ -48,6 +50,15 @@ module.exports = grammar({
     // patch NAME(defaults?) { vports? scopes connections? sink }
     patch: $ => seq(
       'patch',
+      field('name', $.identifier),
+      optional(field('default_params', $.default_params)),
+      field('body', $.patch_body),
+    ),
+
+    // kernel NAME(defaults?) { ... } — structurally identical to `patch`; the keyword
+    // selects the per-sample execution model (see legato parse.rs MacroKind::Kernel).
+    kernel: $ => seq(
+      'kernel',
       field('name', $.identifier),
       optional(field('default_params', $.default_params)),
       field('body', $.patch_body),

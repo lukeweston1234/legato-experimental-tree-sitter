@@ -97,6 +97,42 @@
     }
   },
   {
+    "type": "kernel",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "patch_body",
+            "named": true
+          }
+        ]
+      },
+      "default_params": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "default_params",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "node_declaration",
     "named": true,
     "fields": {
@@ -436,6 +472,10 @@
           "named": true
         },
         {
+          "type": "kernel",
+          "named": true
+        },
+        {
           "type": "patch",
           "named": true
         },
@@ -608,6 +648,10 @@
   {
     "type": "integer",
     "named": true
+  },
+  {
+    "type": "kernel",
+    "named": false
   },
   {
     "type": "null",
